@@ -109,7 +109,7 @@ export default {
           params: { keyword: this.keyword, page: page },
         })
         .then((response) => (this.datas = response.data));
-      console.log("Hello");
+      // console.log("Hello");
     },
   },
   methods: {
