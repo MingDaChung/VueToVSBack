@@ -6,7 +6,7 @@
         type="text"
         v-model.lazy.trim="keyword"
         class="input"
-        @change="inputaddress"
+        @change="callApi"
       />
     </div>
     <table class="table table_border" id="idData" v-if="datas.length > 0">
@@ -83,6 +83,7 @@ export default {
     return {
       keyword: "",
       datas: [],
+      pageconut: 0,
 
       zoom: 16,
       path: "/images/",
@@ -97,29 +98,39 @@ export default {
     };
   },
   mounted() {
-    axios
-      .get("https://localhost:44306/api/youbike")
-      .then((response) => (this.datas = response.data));
+    this.callApi();
     // console.log(this.data);
   },
   watch: {
-    page: function(page) {
-      axios
-        .get("https://localhost:44306/api/youbike", {
-          params: { keyword: this.keyword, page: page },
-        })
-        .then((response) => (this.datas = response.data));
+    page: function() {
+      if (this.page >= this.pageconut) {
+        this.page = this.pageconut;
+      } else if (this.page <= 1) {
+        this.page = 1;
+      }
+      this.callApi();
+
       // console.log("Hello");
     },
   },
   methods: {
-    inputaddress() {
-      let address = this.keyword;
+    // inputaddress() {
+    //   let address = this.keyword;
+    //   axios
+    //     .get("https://localhost:44306/api/youbike", {
+    //       params: { keyword: address },
+    //     })
+    //     .then((response) => (this.datas = response.data));
+    // },
+    callApi() {
       axios
         .get("https://localhost:44306/api/youbike", {
-          params: { keyword: address },
+          params: { keyword: this.keyword, page: this.page },
         })
-        .then((response) => (this.datas = response.data));
+        .then((response) => {
+          this.datas = response.data.result;
+          this.pageconut = response.data.totalPages;
+        });
     },
     CloseMap() {
       if (this.showMap == 1) {
@@ -138,6 +149,13 @@ export default {
       this.center = [data.lat, data.lng];
       this.marker = latLng(data.lat, data.lng);
     },
+    // PageDetect() {
+    //   if (this.page >= this.pageconut) {
+    //     this.page == this.pageconut;
+    //   } else if (this.page <= 1) {
+    //     this.page == 1;
+    //   }
+    // },
   },
 };
 </script>
