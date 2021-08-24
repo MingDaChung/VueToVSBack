@@ -1,8 +1,10 @@
 import Vue from "vue";
 import App from "./App.vue";
 import "leaflet/dist/leaflet.css";
-
 import { Icon } from "leaflet";
+// import loader from "vue-ui-preloader";
+
+// Vue.use(loader);
 
 delete Icon.Default.prototype._getIconUrl;
 Icon.Default.mergeOptions({

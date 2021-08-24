@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <vue-simple-spinner size="medium" v-if="loading" />
     <div class="search_box">
       <span>Please Input Address：</span>
       <input
@@ -9,7 +10,8 @@
         @change="Refresh()"
       />
     </div>
-    <table class="table table_border" id="idData" v-if="datas.length > 0">
+
+    <table class="table table_border" id="idData">
       <thead>
         <tr>
           <td>Map</td>
@@ -70,12 +72,15 @@
 import axios from "axios";
 import { latLng } from "leaflet";
 import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
+import VueSimpleSpinner from "vue-simple-spinner";
+
 export default {
   name: "HelloWorld",
   components: {
     LMap,
     LTileLayer,
     LMarker,
+    VueSimpleSpinner,
   },
   data() {
     return {
@@ -93,6 +98,8 @@ export default {
       showMap: false,
       page: 1,
       logic: "",
+
+      loading: false,
     };
   },
   mounted() {
@@ -110,6 +117,7 @@ export default {
   },
   methods: {
     callApi() {
+      this.loading = true;
       axios
         .get("https://localhost:44306/api/youbike", {
           params: { keyword: this.keyword, page: this.page },
@@ -117,6 +125,9 @@ export default {
         .then((response) => {
           this.datas = response.data.result;
           this.pageconut = response.data.totalPages;
+        })
+        .finally(() => {
+          this.loading = false;
         });
     },
     Refresh() {

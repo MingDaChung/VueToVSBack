@@ -12,6 +12,9 @@
     "core-js": "^3.6.5",
     "leaflet": "^1.7.1",
     "vue": "^2.6.11",
+    "vue-loading-overlay": "^4.0.3",
+    "vue-simple-spinner": "^1.2.10",
+    "vue-ui-preloader": "^1.2.1",
     "vue2-leaflet": "^2.7.1"
   },
   "devDependencies": {
