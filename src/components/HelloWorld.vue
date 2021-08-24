@@ -6,7 +6,7 @@
         type="text"
         v-model.lazy.trim="keyword"
         class="input"
-        @change="callApi"
+        @change="Refresh()"
       />
     </div>
     <table class="table table_border" id="idData" v-if="datas.length > 0">
@@ -97,7 +97,6 @@ export default {
   },
   mounted() {
     this.callApi();
-    // console.log(this.data);
   },
   watch: {
     page: function() {
@@ -119,6 +118,10 @@ export default {
           this.datas = response.data.result;
           this.pageconut = response.data.totalPages;
         });
+    },
+    Refresh() {
+      this.page = 1;
+      this.callApi();
     },
     ShowTheMap(data) {
       if (!this.showMap) {
@@ -163,7 +166,27 @@ td:not(:hover) {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  /* transition: 3s; */
+}
+
+nav {
+  width: 100%;
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+nav ul {
+  list-style: none;
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+button.page-link {
+  display: flex;
+  font-size: 30px;
+  font-weight: 500;
 }
 td {
   font-size: 15px;
