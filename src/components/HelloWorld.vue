@@ -63,8 +63,6 @@
         </li>
       </ul>
     </nav>
-
-    <!-- <div>{{ datas }}</div> -->
   </div>
 </template>
 
@@ -109,19 +107,9 @@ export default {
         this.page = 1;
       }
       this.callApi();
-
-      // console.log("Hello");
     },
   },
   methods: {
-    // inputaddress() {
-    //   let address = this.keyword;
-    //   axios
-    //     .get("https://localhost:44306/api/youbike", {
-    //       params: { keyword: address },
-    //     })
-    //     .then((response) => (this.datas = response.data));
-    // },
     callApi() {
       axios
         .get("https://localhost:44306/api/youbike", {
@@ -132,13 +120,7 @@ export default {
           this.pageconut = response.data.totalPages;
         });
     },
-    CloseMap() {
-      if (this.showMap == 1) {
-        this.showMap = !this.showMap;
-      }
-    },
     ShowTheMap(data) {
-      // console.log(data);
       if (!this.showMap) {
         this.showMap = true;
       } else {
@@ -149,13 +131,6 @@ export default {
       this.center = [data.lat, data.lng];
       this.marker = latLng(data.lat, data.lng);
     },
-    // PageDetect() {
-    //   if (this.page >= this.pageconut) {
-    //     this.page == this.pageconut;
-    //   } else if (this.page <= 1) {
-    //     this.page == 1;
-    //   }
-    // },
   },
 };
 </script>
